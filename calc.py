@@ -21,7 +21,7 @@
 #
 # Reference: https://www.bankbazaar.com/tax/income-tax-slabs.html
 
-
+import sys
 import math
 
 # 25.61% of CTC goes to PF and pension. See
@@ -134,5 +134,20 @@ def print_ctc_for_take_home_pay(desired_take_home, is_employee):
     ctc += 1
   print(f"To take home {format_money(desired_take_home)} a month, you should ask for a CTC of {format_money(ctc)}")
 
-print_take_home_for(lac(12))
-#print_ctc_for_take_home_pay(50, is_employee = False)
+def usage():
+    print("To calculate take home from ctc:") 
+    print("calc.py 12 ctc")  
+    print("To calculate ctc from take home:") 
+    print("calc.py 50 takehome")
+          
+if __name__ == '__main__':
+    count = len(sys.argv[1:])
+    if count <= 1 or count > 3:
+        print("Invalid arguments")
+        usage()
+    if count == 2: 
+        if sys.argv[2] == 'ctc':
+            print_take_home_for(lac(float(sys.argv[1])))
+        if sys.argv[2] == 'takehome':    
+            print_ctc_for_take_home_pay(float(sys.argv[1]), is_employee = False)
+
